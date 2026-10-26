@@ -1,4 +1,4 @@
-@page
+@page "{id:int?}"
 @model Lapustea_Lavinia_Lab2.Pages.CategoryPages.IndexModel
 
 @{
@@ -10,33 +10,66 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Category[0].CategoryName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].BookCategories)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Category) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.BookCategories)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Category)
+        {
+            string selectedRow = "";
+
+            if (item.ID == Model.SelectedCategoryID)
+            {
+                selectedRow = "table-success";
+            }
+
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@if (Model.SelectedCategoryID != null)
+{
+    var selectedCategory = Model.Category
+        .FirstOrDefault(c => c.ID == Model.SelectedCategoryID);
+
+    <h3>Books in Selected Category</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (selectedCategory != null)
+            {
+                @foreach (var bc in selectedCategory.BookCategories)
+                {
+                    <tr>
+                        <td>@bc.Book.Title</td>
+                        <td>@bc.Book.Authors?.FullName</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
