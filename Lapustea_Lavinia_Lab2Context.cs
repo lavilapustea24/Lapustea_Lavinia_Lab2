@@ -1,3 +1,4 @@
+using Lapustea_Lavinia_Lab2.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class Lapustea_Lavinia_Lab2Context(DbContextOptions<Lapustea_Lavinia_Lab2Context> options) : DbContext(options)
@@ -7,5 +8,7 @@ public class Lapustea_Lavinia_Lab2Context(DbContextOptions<Lapustea_Lavinia_Lab2
     public DbSet<Lapustea_Lavinia_Lab2.Models.Authors> Authors { get; set; } = default!;
 
     public DbSet<Lapustea_Lavinia_Lab2.Models.Category> Category { get; set; } = default!;
+    public DbSet<Member> Member { get; set; } = default!;
 
+    public DbSet<Borrowing> Borrowing { get; set; } = default!;
 }

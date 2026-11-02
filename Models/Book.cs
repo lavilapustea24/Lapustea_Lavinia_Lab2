@@ -17,6 +17,7 @@ namespace Lapustea_Lavinia_Lab2.Models
         public Publisher? Publisher { get; set; }
         public int? AuthorsID { get; set; }
         public Authors? Authors { get; set; }
+        public ICollection<Borrowing>? Borrowings { get; set; }
         public ICollection<BookCategory> BookCategories { get; set; } = new List<BookCategory>();
     }
 }

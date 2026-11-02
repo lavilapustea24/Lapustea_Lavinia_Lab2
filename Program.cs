@@ -1,9 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using Lapustea_Lavinia_Lab2.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Lapustea_Lavinia_Lab2Context") ?? throw new InvalidOperationException("Connection string 'Lapustea_Lavinia_Lab2Context' not found.");
 
 builder.Services.AddDbContext<Lapustea_Lavinia_Lab2Context>(options => options.UseSqlServer(connectionString));
 
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<LibraryIdentityContext>();
+builder.Services.AddDbContext<LibraryIdentityContext>(options =>
+    options.UseSqlServer(connectionString));
 // Add services to the container.
 builder.Services.AddRazorPages();
 
